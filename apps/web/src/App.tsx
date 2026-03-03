@@ -4,6 +4,7 @@ import { TamaguiProvider, Theme, tamaguiConfig } from "@repo/ui";
 import { HomeRoute } from "./routes/HomeRoute";
 import { ProductListRoute } from "./routes/ProductListRoute";
 import { ProductDetailsRoute } from "./routes/ProductDetailsRoute";
+import { TodoListRoute } from "./routes/TodoListRoute";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
                 path="/product-details/:id"
                 element={<ProductDetailsRoute />}
               />
+              <Route path="/todo-list" element={<TodoListRoute />} />
             </Routes>
           </BrowserRouter>
         </Theme>

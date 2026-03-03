@@ -6,6 +6,7 @@ import { AppQueryProvider, ROUTES } from "@repo/app";
 import { HomeRoute } from "./src/routes/HomeRoute";
 import { ProductListRoute } from "./src/routes/ProductListRoute";
 import { ProductDetailsRoute } from "./src/routes/ProductDetailsRoute";
+import { TodoListRoute } from "./src/routes/TodoListRoute";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -30,6 +31,11 @@ export default function App() {
                 name={ROUTES.PRODUCT_DETAILS}
                 component={ProductDetailsRoute}
                 options={{ title: "Product Details" }}
+              />
+              <Stack.Screen
+                name={ROUTES.TODO_LIST}
+                component={TodoListRoute}
+                options={{ title: "Todo List" }}
               />
             </Stack.Navigator>
           </NavigationContainer>

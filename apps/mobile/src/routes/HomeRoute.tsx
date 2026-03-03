@@ -10,6 +10,7 @@ export function HomeRoute({ navigation }: Props) {
       onNavigateToProductList={() =>
         navigation.navigate(ROUTES.PRODUCT_LIST, {})
       }
+      onNavigateToTodoList={() => navigation.navigate(ROUTES.TODO_LIST)}
     />
   );
 }

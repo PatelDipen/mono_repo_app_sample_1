@@ -5,6 +5,9 @@ export function HomeRoute() {
   const navigate = useNavigate();
 
   return (
-    <HomeScreen onNavigateToProductList={() => navigate("/product-list")} />
+    <HomeScreen
+      onNavigateToProductList={() => navigate("/product-list")}
+      onNavigateToTodoList={() => navigate("/todo-list")}
+    />
   );
 }

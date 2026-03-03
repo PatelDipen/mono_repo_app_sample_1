@@ -7,12 +7,14 @@ export const ROUTES = {
   HOME: "Home",
   PRODUCT_LIST: "ProductList",
   PRODUCT_DETAILS: "ProductDetails",
+  TODO_LIST: "TodoList",
 } as const;
 
 export type RootStackParamList = {
   [ROUTES.HOME]: undefined;
   [ROUTES.PRODUCT_LIST]: { title?: string };
   [ROUTES.PRODUCT_DETAILS]: { id: string };
+  [ROUTES.TODO_LIST]: undefined;
 };
 
 export type ScreenName = keyof RootStackParamList;
