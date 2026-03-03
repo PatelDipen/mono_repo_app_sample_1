@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -19,6 +19,8 @@ interface ProductListScreenProps {
   title?: string;
   onGoBack: () => void;
   onNavigateToProductDetails: (id: string) => void;
+  initialWebPage?: number;
+  onWebPageChange?: (page: number) => void;
 }
 
 interface ProductCardProps {
@@ -141,10 +143,30 @@ export function ProductListScreen({
   title,
   onGoBack,
   onNavigateToProductDetails,
+  initialWebPage,
+  onWebPageChange,
 }: ProductListScreenProps) {
   const { width } = useWindowDimensions();
   const isWeb = Platform.OS === "web";
-  const [webCurrentPage, setWebCurrentPage] = useState(1);
+  const [webCurrentPage, setWebCurrentPage] = useState(initialWebPage ?? 1);
+
+  useEffect(() => {
+    if (!isWeb) {
+      return;
+    }
+
+    const normalizedPage =
+      initialWebPage && initialWebPage > 0 ? Math.floor(initialWebPage) : 1;
+
+    setWebCurrentPage((previousPage) =>
+      previousPage === normalizedPage ? previousPage : normalizedPage,
+    );
+  }, [initialWebPage, isWeb]);
+
+  function setCurrentWebPage(page: number) {
+    setWebCurrentPage(page);
+    onWebPageChange?.(page);
+  }
 
   const {
     data: webData,
@@ -263,7 +285,7 @@ export function ProductListScreen({
               opacity={canGoPrevious ? 1 : 0.6}
               onPress={() => {
                 if (previousPage) {
-                  setWebCurrentPage(previousPage);
+                  setCurrentWebPage(previousPage);
                 }
               }}
               disabled={!canGoPrevious}
@@ -276,7 +298,7 @@ export function ProductListScreen({
               opacity={canGoNext ? 1 : 0.6}
               onPress={() => {
                 if (nextPage) {
-                  setWebCurrentPage(nextPage);
+                  setCurrentWebPage(nextPage);
                 }
               }}
               disabled={!canGoNext}
