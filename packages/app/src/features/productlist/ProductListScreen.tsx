@@ -25,6 +25,18 @@ interface ProductCardProps {
   index: number;
 }
 
+const CARD_BORDER_COLORS = [
+  "$blue8",
+  "$green8",
+  "$purple8",
+  "$orange8",
+  "$pink8",
+] as const;
+
+function getCardBorderColor(index: number) {
+  return CARD_BORDER_COLORS[index % CARD_BORDER_COLORS.length];
+}
+
 function WebProductCard({
   person,
   index,
@@ -33,6 +45,7 @@ function WebProductCard({
   index: number;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const cardBorderColor = getCardBorderColor(index);
 
   return (
     <Pressable
@@ -51,8 +64,8 @@ function WebProductCard({
         <YStack
           flex={1}
           padding="$4"
-          borderWidth={1}
-          borderColor="$borderColor"
+          borderWidth={2}
+          borderColor={cardBorderColor}
           borderRadius="$4"
           backgroundColor="$background"
           justifyContent="center"
@@ -67,6 +80,7 @@ function WebProductCard({
 
 function MobileProductCard({ person, index }: ProductCardProps) {
   const cardScale = useSharedValue(1);
+  const cardBorderColor = getCardBorderColor(index);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: cardScale.value }],
@@ -95,8 +109,8 @@ function MobileProductCard({ person, index }: ProductCardProps) {
         <YStack
           flex={1}
           padding="$4"
-          borderWidth={1}
-          borderColor="$borderColor"
+          borderWidth={2}
+          borderColor={cardBorderColor}
           borderRadius="$4"
           backgroundColor="$background"
           justifyContent="center"
@@ -150,6 +164,8 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
   const previousPage = webData?.previousPage ?? null;
   const isLoading = isWeb ? isWebLoading : isMobileLoading;
   const isError = isWeb ? isWebError : isMobileError;
+  const canGoPrevious = Boolean(previousPage) && !isLoading;
+  const canGoNext = Boolean(nextPage) && !isLoading;
 
   const numColumns = isWeb ? (width >= 1200 ? 4 : width >= 900 ? 3 : 2) : 1;
 
@@ -209,33 +225,41 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
       ) : null}
 
       {isWeb ? (
-        <XStack gap="$2" width="100%">
-          <Button
-            width="50%"
-            onPress={() => {
-              if (previousPage) {
-                setWebCurrentPage(previousPage);
-              }
-            }}
-            disabled={!previousPage || isLoading}
-          >
-            Previous Page
-          </Button>
-          <Button
-            width="50%"
-            onPress={() => {
-              if (nextPage) {
-                setWebCurrentPage(nextPage);
-              }
-            }}
-            disabled={!nextPage || isLoading}
-          >
-            Next Page
-          </Button>
-        </XStack>
+        <YStack gap="$2" width="100%">
+          <XStack gap="$2" width="100%">
+            <Button
+              width="50%"
+              size="$5"
+              opacity={canGoPrevious ? 1 : 0.6}
+              onPress={() => {
+                if (previousPage) {
+                  setWebCurrentPage(previousPage);
+                }
+              }}
+              disabled={!canGoPrevious}
+            >
+              {canGoPrevious ? "Previous Page" : "No Previous Page"}
+            </Button>
+            <Button
+              width="50%"
+              size="$5"
+              opacity={canGoNext ? 1 : 0.6}
+              onPress={() => {
+                if (nextPage) {
+                  setWebCurrentPage(nextPage);
+                }
+              }}
+              disabled={!canGoNext}
+            >
+              {canGoNext ? "Next Page" : "No Next Page"}
+            </Button>
+          </XStack>
+        </YStack>
       ) : null}
 
-      <Button onPress={onGoBack}>Go Back</Button>
+      <Button size="$5" onPress={onGoBack}>
+        Go Back
+      </Button>
     </YStack>
   );
 }
