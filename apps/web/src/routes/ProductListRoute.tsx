@@ -4,5 +4,12 @@ import { ProductListScreen } from "@repo/app";
 export function ProductListRoute() {
   const navigate = useNavigate();
 
-  return <ProductListScreen onGoBack={() => navigate(-1)} />;
+  return (
+    <ProductListScreen
+      onGoBack={() => navigate(-1)}
+      onNavigateToProductDetails={(id: string) =>
+        navigate(`/product-details/${id}`)
+      }
+    />
+  );
 }

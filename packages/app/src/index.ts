@@ -1,6 +1,7 @@
 // Screens
 export { HomeScreen } from "./features/home/HomeScreen";
 export { ProductListScreen } from "./features/productlist/ProductListScreen";
+export { ProductDetailsScreen } from "./features/productdetails/ProductDetailsScreen";
 export { AppQueryProvider } from "./providers/AppQueryProvider";
 
 // Navigation types

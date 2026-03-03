@@ -4,6 +4,19 @@ const SWAPI_PEOPLE_BASE_URL = "https://swapi.dev/api/people";
 
 export interface SwapiPerson {
   name: string;
+  url: string;
+}
+
+export interface SwapiPersonDetails {
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: string;
+  url: string;
 }
 
 export interface SwapiPeopleResponse {
@@ -32,6 +45,16 @@ export async function getPeoplePage(page: number): Promise<PeoplePageData> {
     nextPage: getPageNumberFromUrl(data.next),
     previousPage: getPageNumberFromUrl(data.previous),
   };
+}
+
+export async function getPersonById(id: string): Promise<SwapiPersonDetails> {
+  const safeId = String(id).trim();
+
+  if (!safeId) {
+    throw new Error("Invalid person id");
+  }
+
+  return apiGet<SwapiPersonDetails>(`${SWAPI_PEOPLE_BASE_URL}/${safeId}/`);
 }
 
 function getPageNumberFromUrl(url: string | null): number | null {

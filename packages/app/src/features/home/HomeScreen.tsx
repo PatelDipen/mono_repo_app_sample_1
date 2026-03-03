@@ -9,13 +9,23 @@ export function HomeScreen({ onNavigateToProductList }: HomeScreenProps) {
     <YStack
       flex={1}
       alignItems="center"
-      justifyContent="center"
+      //   justifyContent="center"
       gap="$4"
       padding="$6"
     >
       <H1>Home</H1>
       <Paragraph>Welcome to the app!</Paragraph>
-      <Button onPress={onNavigateToProductList}>Go to Product List</Button>
+
+      <Button
+        size="$5"
+        width="100%"
+        maxWidth={320}
+        borderRadius="$6"
+        backgroundColor={"$blue6"}
+        onPress={onNavigateToProductList}
+      >
+        Go to Product List
+      </Button>
     </YStack>
   );
 }

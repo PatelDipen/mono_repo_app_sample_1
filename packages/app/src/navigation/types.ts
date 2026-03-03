@@ -6,11 +6,13 @@
 export const ROUTES = {
   HOME: "Home",
   PRODUCT_LIST: "ProductList",
+  PRODUCT_DETAILS: "ProductDetails",
 } as const;
 
 export type RootStackParamList = {
   [ROUTES.HOME]: undefined;
   [ROUTES.PRODUCT_LIST]: { title?: string };
+  [ROUTES.PRODUCT_DETAILS]: { id: string };
 };
 
 export type ScreenName = keyof RootStackParamList;

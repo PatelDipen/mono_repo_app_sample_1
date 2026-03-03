@@ -18,11 +18,13 @@ import { Button, H1, Paragraph, YStack, XStack } from "@repo/ui";
 interface ProductListScreenProps {
   title?: string;
   onGoBack: () => void;
+  onNavigateToProductDetails: (id: string) => void;
 }
 
 interface ProductCardProps {
   person: SwapiPerson;
   index: number;
+  onNavigateToProductDetails: (id: string) => void;
 }
 
 const CARD_BORDER_COLORS = [
@@ -40,9 +42,11 @@ function getCardBorderColor(index: number) {
 function WebProductCard({
   person,
   index,
+  onNavigateToProductDetails,
 }: {
   person: SwapiPerson;
   index: number;
+  onNavigateToProductDetails: (id: string) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const cardBorderColor = getCardBorderColor(index);
@@ -56,6 +60,9 @@ function WebProductCard({
       })}
       onHoverIn={() => setIsHovered(true)}
       onHoverOut={() => setIsHovered(false)}
+      onPress={() =>
+        onNavigateToProductDetails(person.url.split("/").slice(-2, -1)[0])
+      }
     >
       <Animated.View
         entering={FadeInUp.duration(220).delay((index % 8) * 25)}
@@ -78,7 +85,11 @@ function WebProductCard({
   );
 }
 
-function MobileProductCard({ person, index }: ProductCardProps) {
+function MobileProductCard({
+  person,
+  index,
+  onNavigateToProductDetails,
+}: ProductCardProps) {
   const cardScale = useSharedValue(1);
   const cardBorderColor = getCardBorderColor(index);
 
@@ -101,6 +112,9 @@ function MobileProductCard({ person, index }: ProductCardProps) {
           stiffness: 220,
         });
       }}
+      onPress={() =>
+        onNavigateToProductDetails(person.url.split("/").slice(-2, -1)[0])
+      }
     >
       <Animated.View
         entering={FadeInUp.duration(260).delay((index % 8) * 35)}
@@ -123,7 +137,11 @@ function MobileProductCard({ person, index }: ProductCardProps) {
   );
 }
 
-export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
+export function ProductListScreen({
+  title,
+  onGoBack,
+  onNavigateToProductDetails,
+}: ProductListScreenProps) {
   const { width } = useWindowDimensions();
   const isWeb = Platform.OS === "web";
   const [webCurrentPage, setWebCurrentPage] = useState(1);
@@ -200,9 +218,21 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
             contentContainerStyle={{ paddingBottom: 8 }}
             renderItem={({ item, index }) =>
               isWeb ? (
-                <WebProductCard person={item} index={index} />
+                <WebProductCard
+                  person={item}
+                  index={index}
+                  onNavigateToProductDetails={(id) =>
+                    onNavigateToProductDetails(id)
+                  }
+                />
               ) : (
-                <MobileProductCard person={item} index={index} />
+                <MobileProductCard
+                  person={item}
+                  index={index}
+                  onNavigateToProductDetails={(id) =>
+                    onNavigateToProductDetails(id)
+                  }
+                />
               )
             }
             ListEmptyComponent={

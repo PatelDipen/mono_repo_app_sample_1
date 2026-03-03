@@ -3,6 +3,7 @@ import { AppQueryProvider } from "@repo/app";
 import { TamaguiProvider, Theme, tamaguiConfig } from "@repo/ui";
 import { HomeRoute } from "./routes/HomeRoute";
 import { ProductListRoute } from "./routes/ProductListRoute";
+import { ProductDetailsRoute } from "./routes/ProductDetailsRoute";
 
 export default function App() {
   return (
@@ -13,6 +14,10 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomeRoute />} />
               <Route path="/product-list" element={<ProductListRoute />} />
+              <Route
+                path="/product-details/:id"
+                element={<ProductDetailsRoute />}
+              />
             </Routes>
           </BrowserRouter>
         </Theme>
