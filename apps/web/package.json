@@ -10,10 +10,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/app": "0.0.1",
     "@repo/ui": "0.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-native-web": "~0.19.13"
+    "react-native-web": "~0.19.13",
+    "react-router-dom": "^7.0.0"
   },
   "devDependencies": {
     "@types/react": "~19.2.10",

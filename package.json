@@ -9,8 +9,13 @@
   "scripts": {
     "dev:mobile": "npm run dev -w @repo/mobile",
     "dev:web": "npm run dev -w @repo/web",
+    "ios": "npm run ios -w @repo/mobile",
+    "android": "npm run android -w @repo/mobile",
     "build:web": "npm run build -w @repo/web",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules apps/web/dist",
+    "clean:install": "npm run clean && npm install",
+    "clean:build": "npm run clean && npm install && npm run build:web"
   },
   "overrides": {
     "react": "19.2.0",

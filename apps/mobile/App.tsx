@@ -1,28 +1,31 @@
-import {
-  Button,
-  H1,
-  Paragraph,
-  TamaguiProvider,
-  Theme,
-  YStack,
-  tamaguiConfig,
-} from "@repo/ui";
+import { TamaguiProvider, Theme, tamaguiConfig } from "@repo/ui";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "@repo/app";
+import { ROUTES } from "@repo/app";
+import { HomeRoute } from "./src/routes/HomeRoute";
+import { ProductListRoute } from "./src/routes/ProductListRoute";
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme="light">
       <Theme name="light">
-        <YStack
-          flex={1}
-          alignItems="center"
-          justifyContent="center"
-          gap="$4"
-          padding="$6"
-        >
-          <H1>Expo + Tamagui</H1>
-          <Paragraph>Shared UI package from monorepo</Paragraph>
-          <Button>Mobile App</Button>
-        </YStack>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName={ROUTES.HOME}>
+            <Stack.Screen
+              name={ROUTES.HOME}
+              component={HomeRoute}
+              options={{ title: "Home" }}
+            />
+            <Stack.Screen
+              name={ROUTES.PRODUCT_LIST}
+              component={ProductListRoute}
+              options={{ title: "Product List" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Theme>
     </TamaguiProvider>
   );
