@@ -12,7 +12,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.mobile"
     },
-    "android": {},
+    "android": {
+      "package": "com.anonymous.mobile"
+    },
     "web": {
       "bundler": "metro"
     }
