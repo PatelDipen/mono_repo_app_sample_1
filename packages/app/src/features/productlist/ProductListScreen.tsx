@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { FlatList, Platform, useWindowDimensions } from "react-native";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getPeoplePage } from "@repo/api";
-import { Button, H1, Paragraph, YStack } from "@repo/ui";
+import { Button, H1, Paragraph, YStack, XStack } from "@repo/ui";
 
 interface ProductListScreenProps {
   title?: string;
@@ -124,8 +124,9 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
       ) : null}
 
       {isWeb ? (
-        <YStack gap="$2" width="100%" maxWidth={320}>
+        <XStack gap="$2" width="100%">
           <Button
+            width="50%"
             onPress={() => {
               if (previousPage) {
                 setWebCurrentPage(previousPage);
@@ -136,6 +137,7 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
             Previous Page
           </Button>
           <Button
+            width="50%"
             onPress={() => {
               if (nextPage) {
                 setWebCurrentPage(nextPage);
@@ -145,7 +147,7 @@ export function ProductListScreen({ title, onGoBack }: ProductListScreenProps) {
           >
             Next Page
           </Button>
-        </YStack>
+        </XStack>
       ) : null}
 
       <Button onPress={onGoBack}>Go Back</Button>
