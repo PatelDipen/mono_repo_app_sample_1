@@ -12,6 +12,7 @@ export default defineConfig({
       "react-native": "react-native-web",
       "@repo/ui": path.resolve(__dirname, "../../packages/ui/src"),
       "@repo/app": path.resolve(__dirname, "../../packages/app/src"),
+      "@repo/api": path.resolve(__dirname, "../../packages/api/src"),
     },
     extensions: [".web.tsx", ".web.ts", ".web.js", ".tsx", ".ts", ".js"],
   },

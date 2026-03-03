@@ -1,6 +1,7 @@
 // Screens
 export { HomeScreen } from "./features/home/HomeScreen";
 export { ProductListScreen } from "./features/productlist/ProductListScreen";
+export { AppQueryProvider } from "./providers/AppQueryProvider";
 
 // Navigation types
 export type { RootStackParamList, ScreenName } from "./navigation/types";
