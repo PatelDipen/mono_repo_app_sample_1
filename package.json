@@ -1,0 +1,20 @@
+{
+  "name": "mono-repo",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:mobile": "npm run dev -w @repo/mobile",
+    "dev:web": "npm run dev -w @repo/web",
+    "build:web": "npm run build -w @repo/web",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "overrides": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "@types/react": "~19.2.10"
+  }
+}
