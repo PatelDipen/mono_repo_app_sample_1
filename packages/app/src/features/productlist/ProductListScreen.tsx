@@ -13,7 +13,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { getPeoplePage, type SwapiPerson } from "@repo/api";
-import { Button, H1, Paragraph, YStack, XStack } from "@repo/ui";
+import { Button, H1, Input, Paragraph, YStack, XStack } from "@repo/ui";
 
 interface ProductListScreenProps {
   title?: string;
@@ -149,6 +149,7 @@ export function ProductListScreen({
   const { width } = useWindowDimensions();
   const isWeb = Platform.OS === "web";
   const [webCurrentPage, setWebCurrentPage] = useState(initialWebPage ?? 1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (!isWeb) {
@@ -199,6 +200,17 @@ export function ProductListScreen({
   );
 
   const people = isWeb ? (webData?.people ?? []) : mobilePeople;
+  const filteredPeople = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return people;
+    }
+
+    return people.filter((person) =>
+      person.name.toLowerCase().includes(normalizedQuery),
+    );
+  }, [people, searchQuery]);
   const currentPage = isWeb ? webCurrentPage : (data?.pages.length ?? 1);
   const nextPage = webData?.nextPage ?? null;
   const previousPage = webData?.previousPage ?? null;
@@ -211,9 +223,14 @@ export function ProductListScreen({
 
   return (
     <YStack flex={1} alignItems="stretch" padding="$6" gap="$4" width="100%">
-      <H1>{title ?? "Product List"}</H1>
-
       <Paragraph>Loaded pages: {currentPage}</Paragraph>
+
+      <Input
+        size="$4"
+        placeholder="Search products"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
 
       {isLoading ? <Paragraph>Loading...</Paragraph> : null}
       {isError ? (
@@ -224,7 +241,7 @@ export function ProductListScreen({
         <YStack flex={1}>
           <FlatList
             key={`people-grid-${numColumns}`}
-            data={people}
+            data={filteredPeople}
             numColumns={numColumns}
             keyExtractor={(item) => item.name}
             onEndReachedThreshold={isWeb ? undefined : 0.5}
@@ -258,7 +275,13 @@ export function ProductListScreen({
               )
             }
             ListEmptyComponent={
-              !isLoading ? <Paragraph>No records found.</Paragraph> : null
+              !isLoading ? (
+                <Paragraph>
+                  {searchQuery.trim()
+                    ? "No matching records."
+                    : "No records found."}
+                </Paragraph>
+              ) : null
             }
             ListFooterComponent={
               isWeb ? null : (

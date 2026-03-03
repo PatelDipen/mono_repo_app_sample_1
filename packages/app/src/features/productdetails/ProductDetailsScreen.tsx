@@ -19,8 +19,6 @@ export function ProductDetailsScreen({
 
   return (
     <YStack flex={1} alignItems="stretch" padding="$6" gap="$4" width="100%">
-      <H1>Product Details</H1>
-
       <Paragraph>ID: {id}</Paragraph>
 
       {isLoading ? <Paragraph>Loading details...</Paragraph> : null}
