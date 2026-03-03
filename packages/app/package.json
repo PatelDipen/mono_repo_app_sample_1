@@ -7,7 +7,8 @@
   "dependencies": {
     "@tanstack/react-query": "^5.68.0",
     "@repo/api": "0.0.1",
-    "@repo/ui": "0.0.1"
+    "@repo/ui": "0.0.1",
+    "react-native-reanimated": "~4.1.1"
   },
   "peerDependencies": {
     "react": "*",
