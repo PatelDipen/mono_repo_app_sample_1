@@ -6,6 +6,9 @@
     "apps/*",
     "packages/*"
   ],
+  "dependencies": {
+    "react-native-reanimated": "4.2.2"
+  },
   "scripts": {
     "dev:mobile": "npm run dev -w @repo/mobile",
     "dev:web": "npm run dev -w @repo/web",
@@ -20,6 +23,7 @@
   "overrides": {
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "@types/react": "~19.2.10"
+    "@types/react": "~19.2.10",
+    "react-native-reanimated": "4.2.2"
   }
 }
