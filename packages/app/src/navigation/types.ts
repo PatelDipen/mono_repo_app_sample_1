@@ -8,6 +8,7 @@ export const ROUTES = {
   PRODUCT_LIST: "ProductList",
   PRODUCT_DETAILS: "ProductDetails",
   TODO_LIST: "TodoList",
+  WEATHER: "Weather",
 } as const;
 
 export type RootStackParamList = {
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   [ROUTES.PRODUCT_LIST]: { title?: string };
   [ROUTES.PRODUCT_DETAILS]: { id: string };
   [ROUTES.TODO_LIST]: undefined;
+  [ROUTES.WEATHER]: undefined;
 };
 
 export type ScreenName = keyof RootStackParamList;

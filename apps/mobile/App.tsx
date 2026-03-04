@@ -7,6 +7,7 @@ import { HomeRoute } from "./src/routes/HomeRoute";
 import { ProductListRoute } from "./src/routes/ProductListRoute";
 import { ProductDetailsRoute } from "./src/routes/ProductDetailsRoute";
 import { TodoListRoute } from "./src/routes/TodoListRoute";
+import { WeatherRoute } from "./src/routes/WeatherRoute";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -36,6 +37,11 @@ export default function App() {
                 name={ROUTES.TODO_LIST}
                 component={TodoListRoute}
                 options={{ title: "Todo List" }}
+              />
+              <Stack.Screen
+                name={ROUTES.WEATHER}
+                component={WeatherRoute}
+                options={{ title: "Weather" }}
               />
             </Stack.Navigator>
           </NavigationContainer>

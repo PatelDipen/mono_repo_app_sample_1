@@ -11,6 +11,7 @@ export function HomeRoute({ navigation }: Props) {
         navigation.navigate(ROUTES.PRODUCT_LIST, {})
       }
       onNavigateToTodoList={() => navigation.navigate(ROUTES.TODO_LIST)}
+      onNavigateToWeather={() => navigation.navigate(ROUTES.WEATHER)}
     />
   );
 }

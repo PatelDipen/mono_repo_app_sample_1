@@ -3,11 +3,13 @@ import { Button, H1, Paragraph, YStack } from "@repo/ui";
 interface HomeScreenProps {
   onNavigateToProductList: () => void;
   onNavigateToTodoList: () => void;
+  onNavigateToWeather: () => void;
 }
 
 export function HomeScreen({
   onNavigateToProductList,
   onNavigateToTodoList,
+  onNavigateToWeather,
 }: HomeScreenProps) {
   return (
     <YStack
@@ -40,6 +42,17 @@ export function HomeScreen({
         onPress={onNavigateToTodoList}
       >
         Go to TODO List
+      </Button>
+
+      <Button
+        size="$5"
+        width="100%"
+        maxWidth={320}
+        borderRadius="$6"
+        backgroundColor={"$blue6"}
+        onPress={onNavigateToWeather}
+      >
+        Go To Weather
       </Button>
     </YStack>
   );
