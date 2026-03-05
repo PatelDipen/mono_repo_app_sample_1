@@ -12,6 +12,7 @@ export function HomeRoute({ navigation }: Props) {
       }
       onNavigateToTodoList={() => navigation.navigate(ROUTES.TODO_LIST)}
       onNavigateToWeather={() => navigation.navigate(ROUTES.WEATHER)}
+      onNavigateToUILibrary={() => navigation.navigate(ROUTES.UI_LIBRARY)}
     />
   );
 }

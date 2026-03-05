@@ -11,12 +11,14 @@ interface HomeScreenProps {
   onNavigateToProductList: () => void;
   onNavigateToTodoList: () => void;
   onNavigateToWeather: () => void;
+  onNavigateToUILibrary: () => void;
 }
 
 export function HomeScreen({
   onNavigateToProductList,
   onNavigateToTodoList,
   onNavigateToWeather,
+  onNavigateToUILibrary,
 }: HomeScreenProps) {
   const navButtonProps = {
     size: "$5" as const,
@@ -44,6 +46,10 @@ export function HomeScreen({
 
         <Button {...navButtonProps} onPress={onNavigateToWeather}>
           Go To Weather
+        </Button>
+
+        <Button {...navButtonProps} onPress={onNavigateToUILibrary}>
+          Go to UI Library
         </Button>
       </ScreenActions>
     </AppScreen>

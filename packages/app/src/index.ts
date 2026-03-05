@@ -4,6 +4,7 @@ export { ProductListScreen } from "./features/productlist/ProductListScreen";
 export { ProductDetailsScreen } from "./features/productdetails/ProductDetailsScreen";
 export { TodoListScreen } from "./features/todolist/TodoListScreen";
 export { WeatherScreen } from "./features/weather/WeatherScreen";
+export { UILibraryScreen } from "./features/uilibrary/UILibraryScreen";
 export { AppQueryProvider } from "./providers/AppQueryProvider";
 
 // Navigation types

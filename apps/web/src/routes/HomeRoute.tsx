@@ -9,6 +9,7 @@ export function HomeRoute() {
       onNavigateToProductList={() => navigate("/product-list")}
       onNavigateToTodoList={() => navigate("/todo-list")}
       onNavigateToWeather={() => navigate("/weather")}
+      onNavigateToUILibrary={() => navigate("/ui-library")}
     />
   );
 }

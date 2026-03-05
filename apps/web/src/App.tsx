@@ -6,6 +6,7 @@ import { ProductListRoute } from "./routes/ProductListRoute";
 import { ProductDetailsRoute } from "./routes/ProductDetailsRoute";
 import { TodoListRoute } from "./routes/TodoListRoute";
 import { WeatherRoute } from "./routes/WeatherRoute";
+import { UILibraryRoute } from "./routes/UILibraryRoute";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
               />
               <Route path="/todo-list" element={<TodoListRoute />} />
               <Route path="/weather" element={<WeatherRoute />} />
+              <Route path="/ui-library" element={<UILibraryRoute />} />
             </Routes>
           </BrowserRouter>
         </Theme>

@@ -5,9 +5,20 @@ export {
   XStack,
   YStack,
   H1,
+  H2,
   Paragraph,
+  Separator,
   Button,
+  Label,
   Input,
+  TextArea,
+  Switch,
+  Checkbox,
+  RadioGroup,
+  Spinner,
+  Progress,
+  Card,
+  Avatar,
 } from "tamagui";
 export { default as tamaguiConfig } from "./tamagui.config";
 export {
