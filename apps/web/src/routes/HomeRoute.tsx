@@ -8,6 +8,7 @@ export function HomeRoute() {
     <HomeScreen
       onNavigateToProductList={() => navigate("/product-list")}
       onNavigateToTodoList={() => navigate("/todo-list")}
+      onNavigateToTickets={() => navigate("/tickets")}
       onNavigateToWeather={() => navigate("/weather")}
       onNavigateToUILibrary={() => navigate("/ui-library")}
     />

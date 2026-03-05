@@ -5,6 +5,7 @@ import { HomeRoute } from "./routes/HomeRoute";
 import { ProductListRoute } from "./routes/ProductListRoute";
 import { ProductDetailsRoute } from "./routes/ProductDetailsRoute";
 import { TodoListRoute } from "./routes/TodoListRoute";
+import { TicketsRoute } from "./routes/TicketsRoute";
 import { WeatherRoute } from "./routes/WeatherRoute";
 import { UILibraryRoute } from "./routes/UILibraryRoute";
 
@@ -22,6 +23,7 @@ export default function App() {
                 element={<ProductDetailsRoute />}
               />
               <Route path="/todo-list" element={<TodoListRoute />} />
+              <Route path="/tickets" element={<TicketsRoute />} />
               <Route path="/weather" element={<WeatherRoute />} />
               <Route path="/ui-library" element={<UILibraryRoute />} />
             </Routes>

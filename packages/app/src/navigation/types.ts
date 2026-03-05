@@ -8,6 +8,7 @@ export const ROUTES = {
   PRODUCT_LIST: "ProductList",
   PRODUCT_DETAILS: "ProductDetails",
   TODO_LIST: "TodoList",
+  TICKETS: "Tickets",
   WEATHER: "Weather",
   UI_LIBRARY: "UILibrary",
 } as const;
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   [ROUTES.PRODUCT_LIST]: { title?: string };
   [ROUTES.PRODUCT_DETAILS]: { id: string };
   [ROUTES.TODO_LIST]: undefined;
+  [ROUTES.TICKETS]: undefined;
   [ROUTES.WEATHER]: undefined;
   [ROUTES.UI_LIBRARY]: undefined;
 };

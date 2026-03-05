@@ -10,6 +10,7 @@ import {
 interface HomeScreenProps {
   onNavigateToProductList: () => void;
   onNavigateToTodoList: () => void;
+  onNavigateToTickets: () => void;
   onNavigateToWeather: () => void;
   onNavigateToUILibrary: () => void;
 }
@@ -17,6 +18,7 @@ interface HomeScreenProps {
 export function HomeScreen({
   onNavigateToProductList,
   onNavigateToTodoList,
+  onNavigateToTickets,
   onNavigateToWeather,
   onNavigateToUILibrary,
 }: HomeScreenProps) {
@@ -42,6 +44,10 @@ export function HomeScreen({
 
         <Button {...navButtonProps} onPress={onNavigateToTodoList}>
           Go to TODO List
+        </Button>
+
+        <Button {...navButtonProps} onPress={onNavigateToTickets}>
+          Go to Tickets
         </Button>
 
         <Button {...navButtonProps} onPress={onNavigateToWeather}>

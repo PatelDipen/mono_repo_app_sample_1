@@ -7,6 +7,7 @@ import { HomeRoute } from "./src/routes/HomeRoute";
 import { ProductListRoute } from "./src/routes/ProductListRoute";
 import { ProductDetailsRoute } from "./src/routes/ProductDetailsRoute";
 import { TodoListRoute } from "./src/routes/TodoListRoute";
+import { TicketsRoute } from "./src/routes/TicketsRoute";
 import { WeatherRoute } from "./src/routes/WeatherRoute";
 import { UILibraryRoute } from "./src/routes/UILibraryRoute";
 
@@ -38,6 +39,11 @@ export default function App() {
                 name={ROUTES.TODO_LIST}
                 component={TodoListRoute}
                 options={{ title: "Todo List" }}
+              />
+              <Stack.Screen
+                name={ROUTES.TICKETS}
+                component={TicketsRoute}
+                options={{ title: "Tickets" }}
               />
               <Stack.Screen
                 name={ROUTES.WEATHER}
