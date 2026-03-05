@@ -34,6 +34,14 @@ export function TicketsScreen({ onGoBack }: TicketsScreenProps) {
   const [title, setTitle] = useState("");
   const [editingTicketId, setEditingTicketId] = useState<string | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
+  const [draggedTicket, setDraggedTicket] = useState<{
+    id: string;
+    status: TicketStatus;
+  } | null>(null);
+  const [dropTargetStatus, setDropTargetStatus] = useState<TicketStatus | null>(
+    null,
+  );
+  const [dragFeedback, setDragFeedback] = useState("");
 
   const tickets = useTicketStore((state) => state.tickets);
   const addTicket = useTicketStore((state) => state.addTicket);
@@ -75,16 +83,70 @@ export function TicketsScreen({ onGoBack }: TicketsScreenProps) {
     setEditingTitle("");
   }
 
+  function handleDragStart(ticketId: string, status: TicketStatus) {
+    setDraggedTicket({ id: ticketId, status });
+    setDragFeedback("");
+  }
+
+  function handleDragEnd() {
+    setDraggedTicket(null);
+    setDropTargetStatus(null);
+  }
+
+  function handleDropToStatus(targetStatus: TicketStatus) {
+    if (!draggedTicket) {
+      return;
+    }
+
+    const allowedTransitions = getAllowedTicketTransitions(
+      draggedTicket.status,
+    );
+
+    if (!allowedTransitions.includes(targetStatus)) {
+      setDragFeedback(
+        `Invalid move: ${TICKET_STATUS_TITLES[draggedTicket.status]} → ${TICKET_STATUS_TITLES[targetStatus]}`,
+      );
+      setDraggedTicket(null);
+      return;
+    }
+
+    moveTicket(draggedTicket.id, targetStatus);
+    setDragFeedback("");
+    setDraggedTicket(null);
+  }
+
   const SectionWrapper = isWideWeb ? XStack : YStack;
 
   const sections = TICKET_STATUS_ORDER.map((status) => {
     const items = ticketsByStatus[status];
+    const webDropProps = isWeb
+      ? ({
+          onDragOver: (event: any) => {
+            event.preventDefault();
+            setDropTargetStatus(status);
+          },
+          onDragLeave: () => {
+            setDropTargetStatus((current) =>
+              current === status ? null : current,
+            );
+          },
+          onDrop: (event: any) => {
+            event.preventDefault();
+            setDropTargetStatus(null);
+            handleDropToStatus(status);
+          },
+        } as any)
+      : {};
 
     return (
       <SurfaceCard
         key={status}
         flex={isWideWeb ? 1 : undefined}
         minHeight={260}
+        borderColor={
+          isWeb && dropTargetStatus === status ? "$blue8" : undefined
+        }
+        {...webDropProps}
       >
         <SectionLabel>{TICKET_STATUS_TITLES[status]}</SectionLabel>
 
@@ -96,6 +158,15 @@ export function TicketsScreen({ onGoBack }: TicketsScreenProps) {
             const allowedTransitions = getAllowedTicketTransitions(
               ticket.status,
             );
+            const webDragProps =
+              isWeb && !isEditing
+                ? ({
+                    draggable: true,
+                    onDragStart: () =>
+                      handleDragStart(ticket.id, ticket.status),
+                    onDragEnd: handleDragEnd,
+                  } as any)
+                : {};
 
             return (
               <SurfaceCard
@@ -103,6 +174,7 @@ export function TicketsScreen({ onGoBack }: TicketsScreenProps) {
                 borderRadius="$3"
                 padding="$2"
                 gap="$2"
+                {...webDragProps}
               >
                 {isEditing ? (
                   <XStack gap="$2" alignItems="center">
@@ -177,6 +249,14 @@ export function TicketsScreen({ onGoBack }: TicketsScreenProps) {
         <MutedText>
           Workflow: TODO → In Progress → In Code Review → In QA → Done
         </MutedText>
+        {isWeb ? (
+          <MutedText>
+            Drag ticket cards between columns to move status.
+          </MutedText>
+        ) : null}
+        {dragFeedback ? (
+          <Paragraph color="$red10">{dragFeedback}</Paragraph>
+        ) : null}
       </ScreenHeader>
 
       <XStack gap="$2" width="100%" alignItems="center">
