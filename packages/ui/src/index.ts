@@ -1,6 +1,7 @@
 export {
   TamaguiProvider,
   Theme,
+  styled,
   XStack,
   YStack,
   H1,
@@ -9,3 +10,12 @@ export {
   Input,
 } from "tamagui";
 export { default as tamaguiConfig } from "./tamagui.config";
+export {
+  AppScreen,
+  SurfaceCard,
+  SectionLabel,
+  MutedText,
+  ListActionButton,
+  ScreenHeader,
+  ScreenActions,
+} from "./primitives";

@@ -13,7 +13,19 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { getPeoplePage, type SwapiPerson } from "@repo/api";
-import { Button, H1, Input, Paragraph, YStack, XStack } from "@repo/ui";
+import {
+  AppScreen,
+  Button,
+  H1,
+  Input,
+  MutedText,
+  Paragraph,
+  ScreenActions,
+  ScreenHeader,
+  SurfaceCard,
+  XStack,
+  YStack,
+} from "@repo/ui";
 
 interface ProductListScreenProps {
   title?: string;
@@ -29,16 +41,10 @@ interface ProductCardProps {
   onNavigateToProductDetails: (id: string) => void;
 }
 
-const CARD_BORDER_COLORS = [
-  "$blue8",
-  "$green8",
-  "$purple8",
-  "$orange8",
-  "$pink8",
-] as const;
+const CARD_ACCENTS = ["blue", "green", "purple", "orange", "pink"] as const;
 
-function getCardBorderColor(index: number) {
-  return CARD_BORDER_COLORS[index % CARD_BORDER_COLORS.length];
+function getCardAccent(index: number) {
+  return CARD_ACCENTS[index % CARD_ACCENTS.length];
 }
 
 function WebProductCard({
@@ -51,7 +57,7 @@ function WebProductCard({
   onNavigateToProductDetails: (id: string) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const cardBorderColor = getCardBorderColor(index);
+  const cardAccent = getCardAccent(index);
 
   return (
     <Pressable
@@ -70,18 +76,16 @@ function WebProductCard({
         entering={FadeInUp.duration(220).delay((index % 8) * 25)}
         style={{ flex: 1 }}
       >
-        <YStack
+        <SurfaceCard
           flex={1}
           padding="$4"
-          borderWidth={2}
-          borderColor={cardBorderColor}
-          borderRadius="$4"
-          backgroundColor="$background"
+          emphasis="medium"
+          accent={cardAccent}
           justifyContent="center"
           minHeight={120}
         >
           <Paragraph>{person.name}</Paragraph>
-        </YStack>
+        </SurfaceCard>
       </Animated.View>
     </Pressable>
   );
@@ -93,7 +97,7 @@ function MobileProductCard({
   onNavigateToProductDetails,
 }: ProductCardProps) {
   const cardScale = useSharedValue(1);
-  const cardBorderColor = getCardBorderColor(index);
+  const cardAccent = getCardAccent(index);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: cardScale.value }],
@@ -122,18 +126,16 @@ function MobileProductCard({
         entering={FadeInUp.duration(260).delay((index % 8) * 35)}
         style={[{ flex: 1 }, animatedStyle]}
       >
-        <YStack
+        <SurfaceCard
           flex={1}
           padding="$4"
-          borderWidth={2}
-          borderColor={cardBorderColor}
-          borderRadius="$4"
-          backgroundColor="$background"
+          emphasis="medium"
+          accent={cardAccent}
           justifyContent="center"
           minHeight={72}
         >
           <Paragraph>{person.name}</Paragraph>
-        </YStack>
+        </SurfaceCard>
       </Animated.View>
     </Pressable>
   );
@@ -222,8 +224,11 @@ export function ProductListScreen({
   const numColumns = isWeb ? (width >= 1200 ? 4 : width >= 900 ? 3 : 2) : 1;
 
   return (
-    <YStack flex={1} alignItems="stretch" padding="$6" gap="$4" width="100%">
-      <Paragraph>Loaded pages: {currentPage}</Paragraph>
+    <AppScreen>
+      <ScreenHeader>
+        <H1>{title ?? "Product List"}</H1>
+        <MutedText>Loaded pages: {currentPage}</MutedText>
+      </ScreenHeader>
 
       <Input
         size="$4"
@@ -232,9 +237,9 @@ export function ProductListScreen({
         onChangeText={setSearchQuery}
       />
 
-      {isLoading ? <Paragraph>Loading...</Paragraph> : null}
+      {isLoading ? <MutedText>Loading...</MutedText> : null}
       {isError ? (
-        <Paragraph>Unable to load people. Please try again.</Paragraph>
+        <MutedText>Unable to load people. Please try again.</MutedText>
       ) : null}
 
       {!isError ? (
@@ -276,21 +281,21 @@ export function ProductListScreen({
             }
             ListEmptyComponent={
               !isLoading ? (
-                <Paragraph>
+                <MutedText>
                   {searchQuery.trim()
                     ? "No matching records."
                     : "No records found."}
-                </Paragraph>
+                </MutedText>
               ) : null
             }
             ListFooterComponent={
               isWeb ? null : (
                 <YStack paddingVertical="$2">
                   {isFetchingNextPage ? (
-                    <Paragraph>Loading more...</Paragraph>
+                    <MutedText>Loading more...</MutedText>
                   ) : null}
                   {!hasNextPage && people.length > 0 ? (
-                    <Paragraph>No more records</Paragraph>
+                    <MutedText>No more records</MutedText>
                   ) : null}
                 </YStack>
               )
@@ -332,9 +337,11 @@ export function ProductListScreen({
         </YStack>
       ) : null}
 
-      <Button size="$5" onPress={onGoBack}>
-        Go Back
-      </Button>
-    </YStack>
+      <ScreenActions>
+        <Button size="$5" onPress={onGoBack}>
+          Go Back
+        </Button>
+      </ScreenActions>
+    </AppScreen>
   );
 }

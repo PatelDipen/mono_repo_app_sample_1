@@ -1,4 +1,11 @@
-import { Button, H1, Paragraph, YStack } from "@repo/ui";
+import {
+  AppScreen,
+  Button,
+  H1,
+  MutedText,
+  ScreenActions,
+  ScreenHeader,
+} from "@repo/ui";
 
 interface HomeScreenProps {
   onNavigateToProductList: () => void;
@@ -11,49 +18,34 @@ export function HomeScreen({
   onNavigateToTodoList,
   onNavigateToWeather,
 }: HomeScreenProps) {
+  const navButtonProps = {
+    size: "$5" as const,
+    width: "100%" as const,
+    maxWidth: 320,
+    borderRadius: "$6" as const,
+    backgroundColor: "$blue6" as const,
+  };
+
   return (
-    <YStack
-      flex={1}
-      alignItems="center"
-      //   justifyContent="center"
-      gap="$4"
-      padding="$6"
-    >
-      <H1>Home</H1>
-      <Paragraph>Welcome to the app!</Paragraph>
+    <AppScreen alignItems="center">
+      <ScreenHeader alignItems="center">
+        <H1>Home</H1>
+        <MutedText>Welcome to the app!</MutedText>
+      </ScreenHeader>
 
-      <Button
-        size="$5"
-        width="100%"
-        maxWidth={320}
-        borderRadius="$6"
-        backgroundColor={"$blue6"}
-        onPress={onNavigateToProductList}
-      >
-        Go to Product List
-      </Button>
+      <ScreenActions alignItems="center">
+        <Button {...navButtonProps} onPress={onNavigateToProductList}>
+          Go to Product List
+        </Button>
 
-      <Button
-        size="$5"
-        width="100%"
-        maxWidth={320}
-        borderRadius="$6"
-        backgroundColor={"$blue6"}
-        onPress={onNavigateToTodoList}
-      >
-        Go to TODO List
-      </Button>
+        <Button {...navButtonProps} onPress={onNavigateToTodoList}>
+          Go to TODO List
+        </Button>
 
-      <Button
-        size="$5"
-        width="100%"
-        maxWidth={320}
-        borderRadius="$6"
-        backgroundColor={"$blue6"}
-        onPress={onNavigateToWeather}
-      >
-        Go To Weather
-      </Button>
-    </YStack>
+        <Button {...navButtonProps} onPress={onNavigateToWeather}>
+          Go To Weather
+        </Button>
+      </ScreenActions>
+    </AppScreen>
   );
 }

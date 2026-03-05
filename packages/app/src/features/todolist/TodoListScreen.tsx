@@ -1,6 +1,19 @@
 import { useMemo, useState } from "react";
 import { Platform, ScrollView, useWindowDimensions } from "react-native";
-import { Button, H1, Input, Paragraph, XStack, YStack } from "@repo/ui";
+import {
+  AppScreen,
+  Button,
+  H1,
+  Input,
+  MutedText,
+  Paragraph,
+  ScreenActions,
+  ScreenHeader,
+  SectionLabel,
+  SurfaceCard,
+  XStack,
+  YStack,
+} from "@repo/ui";
 import { type TodoStatus, useTodoStore } from "./todoStore";
 
 interface TodoListScreenProps {
@@ -57,32 +70,16 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
 
   const SectionWrapper = isWideWeb ? XStack : YStack;
   const sections = ALL_STATUSES.map((status) => (
-    <YStack
-      key={status}
-      flex={isWideWeb ? 1 : undefined}
-      borderWidth={1}
-      borderColor="$borderColor"
-      borderRadius="$4"
-      padding="$3"
-      gap="$2"
-      minHeight={220}
-    >
-      <Paragraph>{STATUS_TITLES[status]}</Paragraph>
+    <SurfaceCard key={status} flex={isWideWeb ? 1 : undefined} minHeight={220}>
+      <SectionLabel>{STATUS_TITLES[status]}</SectionLabel>
       {todosByStatus[status].length === 0 ? (
-        <Paragraph>No items</Paragraph>
+        <MutedText>No items</MutedText>
       ) : (
         todosByStatus[status].map((todo) => {
           const nextStatus = getNextStatus(todo.status);
 
           return (
-            <YStack
-              key={todo.id}
-              borderWidth={1}
-              borderColor="$borderColor"
-              borderRadius="$3"
-              padding="$2"
-              gap="$2"
-            >
+            <SurfaceCard key={todo.id} borderRadius="$3" padding="$2" gap="$2">
               <Paragraph>{todo.title}</Paragraph>
               <XStack gap="$2" flexWrap="wrap">
                 <Button
@@ -99,16 +96,18 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
                   Delete
                 </Button>
               </XStack>
-            </YStack>
+            </SurfaceCard>
           );
         })
       )}
-    </YStack>
+    </SurfaceCard>
   ));
 
   return (
-    <YStack flex={1} alignItems="stretch" padding="$6" gap="$4" width="100%">
-      <H1>TODO List</H1>
+    <AppScreen>
+      <ScreenHeader>
+        <H1>TODO List</H1>
+      </ScreenHeader>
 
       <XStack gap="$2" width="100%" alignItems="center">
         <Input
@@ -147,9 +146,11 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
         </ScrollView>
       )}
 
-      <Button size="$5" onPress={onGoBack}>
-        Go Back
-      </Button>
-    </YStack>
+      <ScreenActions>
+        <Button size="$5" onPress={onGoBack}>
+          Go Back
+        </Button>
+      </ScreenActions>
+    </AppScreen>
   );
 }

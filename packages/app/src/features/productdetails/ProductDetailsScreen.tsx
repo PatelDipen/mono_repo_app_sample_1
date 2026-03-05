@@ -1,6 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPersonById } from "@repo/api";
-import { Button, H1, Paragraph, YStack } from "@repo/ui";
+import {
+  AppScreen,
+  Button,
+  H1,
+  MutedText,
+  Paragraph,
+  ScreenActions,
+  ScreenHeader,
+  SurfaceCard,
+} from "@repo/ui";
 
 interface ProductDetailsScreenProps {
   id: string;
@@ -18,19 +27,21 @@ export function ProductDetailsScreen({
   });
 
   return (
-    <YStack flex={1} alignItems="stretch" padding="$6" gap="$4" width="100%">
-      <Paragraph>ID: {id}</Paragraph>
+    <AppScreen>
+      <ScreenHeader>
+        <H1>Product Details</H1>
+        <MutedText>ID: {id}</MutedText>
+      </ScreenHeader>
 
-      {isLoading ? <Paragraph>Loading details...</Paragraph> : null}
+      {isLoading ? <MutedText>Loading details...</MutedText> : null}
       {isError ? (
-        <Paragraph>Unable to load person details. Please try again.</Paragraph>
+        <MutedText>Unable to load person details. Please try again.</MutedText>
       ) : null}
 
       {data ? (
-        <YStack
+        <SurfaceCard
           gap="$2"
-          borderWidth={1}
-          borderColor={data.eye_color}
+          borderColor="$borderColor"
           borderRadius="$4"
           padding="$4"
         >
@@ -42,12 +53,14 @@ export function ProductDetailsScreen({
           <Paragraph>Eye Color: {data.eye_color}</Paragraph>
           <Paragraph>Hair Color: {data.hair_color}</Paragraph>
           <Paragraph>Skin Color: {data.skin_color}</Paragraph>
-        </YStack>
+        </SurfaceCard>
       ) : null}
 
-      <Button size="$5" onPress={onGoBack}>
-        Go Back
-      </Button>
-    </YStack>
+      <ScreenActions>
+        <Button size="$5" onPress={onGoBack}>
+          Go Back
+        </Button>
+      </ScreenActions>
+    </AppScreen>
   );
 }
