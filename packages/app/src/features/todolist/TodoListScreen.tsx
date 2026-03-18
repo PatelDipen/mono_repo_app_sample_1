@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Platform, ScrollView, useWindowDimensions } from "react-native";
 import {
   AppScreen,
@@ -47,10 +47,17 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
   const [title, setTitle] = useState("");
 
   const todos = useTodoStore((state) => state.todos);
+  const isLoading = useTodoStore((state) => state.isLoading);
+  const error = useTodoStore((state) => state.error);
+  const loadTodos = useTodoStore((state) => state.loadTodos);
   const addTodo = useTodoStore((state) => state.addTodo);
   const deleteTodo = useTodoStore((state) => state.deleteTodo);
   const updateTodoStatus = useTodoStore((state) => state.updateTodoStatus);
   const clearCompleted = useTodoStore((state) => state.clearCompleted);
+
+  useEffect(() => {
+    void loadTodos();
+  }, [loadTodos]);
 
   const todosByStatus = useMemo(
     () => ({
@@ -61,9 +68,13 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
     [todos],
   );
 
-  function handleAddTodo() {
-    addTodo(title);
+  async function handleAddTodo() {
+    await addTodo(title);
     setTitle("");
+  }
+
+  async function handleClearCompleted() {
+    await clearCompleted();
   }
 
   const completedCount = todosByStatus.completed.length;
@@ -84,14 +95,18 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
               <XStack gap="$2" flexWrap="wrap">
                 <Button
                   size="$2"
-                  onPress={() => updateTodoStatus(todo.id, nextStatus)}
+                  onPress={() => {
+                    void updateTodoStatus(todo.id, nextStatus);
+                  }}
                 >
                   Move to {STATUS_TITLES[nextStatus]}
                 </Button>
                 <Button
                   size="$2"
                   theme="red"
-                  onPress={() => deleteTodo(todo.id)}
+                  onPress={() => {
+                    void deleteTodo(todo.id);
+                  }}
                 >
                   Delete
                 </Button>
@@ -123,13 +138,16 @@ export function TodoListScreen({ onGoBack }: TodoListScreenProps) {
         <Button
           size="$4"
           theme="red"
-          onPress={clearCompleted}
+          onPress={handleClearCompleted}
           disabled={completedCount === 0}
           opacity={completedCount === 0 ? 0.6 : 1}
         >
           Clear Completed
         </Button>
       </XStack>
+
+      {isLoading ? <MutedText>Loading todos...</MutedText> : null}
+      {error ? <MutedText color="$red10">{error}</MutedText> : null}
 
       {isWideWeb ? (
         <SectionWrapper gap="$3" width="100%" flex={1} alignItems="stretch">
