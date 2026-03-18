@@ -54,6 +54,18 @@ export async function apiPut<TResponse, TRequest>(
   }
 }
 
+export async function apiPatch<TResponse, TRequest>(
+  url: string,
+  body: TRequest,
+): Promise<TResponse> {
+  try {
+    const response = await apiClient.patch<TResponse>(url, body);
+    return response.data;
+  } catch (error) {
+    throw createApiError(error);
+  }
+}
+
 export async function apiDelete(url: string): Promise<void> {
   try {
     await apiClient.delete(url);

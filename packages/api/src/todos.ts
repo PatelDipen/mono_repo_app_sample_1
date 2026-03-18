@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, apiPut } from "./client";
+import { apiDelete, apiGet, apiPatch, apiPost } from "./client";
 
 const isWebRuntime =
   typeof globalThis !== "undefined" &&
@@ -41,7 +41,7 @@ export async function updateTodo(
   id: string,
   payload: UpdateTodoRequest,
 ): Promise<TodoApiItem> {
-  return apiPut<TodoApiItem, UpdateTodoRequest>(
+  return apiPatch<TodoApiItem, UpdateTodoRequest>(
     `${TODOS_BASE_URL}/${encodeURIComponent(id)}`,
     payload,
   );
